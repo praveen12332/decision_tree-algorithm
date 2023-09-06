@@ -1,0 +1,22 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+from sklearn import tree
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
+data=pd.read_csv("diabetes.csv")
+
+data.columns
+feature_col=['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin',
+       'BMI', 'DiabetesPedigreeFunction']
+x=data[['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin',
+       'BMI', 'DiabetesPedigreeFunction']]
+y=data["Outcome"]
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.7)
+clf=DecisionTreeClassifier()
+clf.fit(x_train,y_train)
+y_pred=clf.predict(x_test)
+metrics.accuracy_score(y_test,y_pred)
+tree.plot_tree(decision_tree=clf,feature_names=feature_col,rounded=True,filled=True,label="decision tree of diabetes data",impurity=True)
+plt.show()
